@@ -1,6 +1,9 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, ParseIntPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, ParseIntPipe, ValidationPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user-dto';
+// import { UpdateUserDto } from './dto/update-user-dto';
 
 @Controller('users')
 export class UsersController {
@@ -33,10 +36,15 @@ export class UsersController {
   }
   
   @Post()
-  create(@Body() user: {name: string, email: string, role: 
-    'INTERN' | 'ENGINEER' | "ADMIN"}) {
-    return this.usersService.create(user)
+  create(@Body(ValidationPipe) createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
   }
+
+  // another correct pattern, you can use 'user' or CreateUserDto
+  // @Post()
+  // create(@Body() CreateUserDto: CreateUserDto) {
+  //   return this.usersService.create(CreateUserDto);
+  // }
 
   // @Patch(':id')
   // // the param decorator
@@ -48,9 +56,8 @@ export class UsersController {
   // using the ParseIntPipe, removes the unary (+id)
   @Patch(':id')
   // the param decorator
-  update(@Param('id', ParseIntPipe) id: number, @Body() userUpdate: {name?: string, email?:
-    string, role?: 'INTERN' | 'ENGINEER' | 'ADMIN'}) {
-    return this.usersService.update(id, userUpdate)
+  update(@Param('id', ParseIntPipe) id: number, @Body(ValidationPipe) updateUserDto: UpdateUserDto) {
+    return this.usersService.update(id, updateUserDto)
   }
 
 
