@@ -5,7 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user-dto';
 // import { UpdateUserDto } from './dto/update-user-dto';
 
-@Controller('users')
+@Controller('users') // the users here simply means , it is going to handle the users route
 export class UsersController {
 // singleton
   constructor(private readonly usersService: UsersService) {}

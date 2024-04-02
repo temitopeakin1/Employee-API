@@ -13,7 +13,7 @@ datasource db {
 
 // define model
 model Employee {
-  id    Int    @id  @default(autoincrement())
+  id    Int    @id  @default(autoincrement()) // increments the id
   name  String   
   email  String  @unique
   role Role
@@ -21,7 +21,7 @@ model Employee {
   updatedAt DateTime @updatedAt
 }
 
-// define enum
+// define enum role
 
 enum Role {
   INTERN
